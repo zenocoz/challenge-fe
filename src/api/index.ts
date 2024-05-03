@@ -5,7 +5,7 @@ export const fetchData = async (
 	minutes: number
 ): Promise<SingleCryptoInfo> => {
 	try {
-		const response = await fetch(`price/${symbol}?minutes=${minutes}`);
+		const response = await fetch(`/api/price/${symbol}?minutes=${minutes}`);
 
 		if (!response.ok) {
 			throw new Error("Failed to fetch data");

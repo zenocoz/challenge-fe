@@ -2,7 +2,6 @@
 	"name": "challenge-fe",
 	"version": "0.1.0",
 	"private": true,
-	"proxy": "https://challenge-fullstack.onrender.com/",
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.17.0",
 		"@testing-library/react": "^13.4.0",
@@ -12,6 +11,8 @@
 		"@types/react": "^18.3.1",
 		"@types/react-dom": "^18.3.0",
 		"bootstrap": "^5.3.3",
+		"express": "^4.19.2",
+		"http-proxy-middleware": "^3.0.0",
 		"react": "^18.3.1",
 		"react-bootstrap": "^2.10.2",
 		"react-dom": "^18.3.1",
@@ -20,7 +21,7 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "react-scripts start --proxy-setup ./src/setupProxy.js",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
