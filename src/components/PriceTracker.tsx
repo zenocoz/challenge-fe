@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
 	Container,
 	Row,
@@ -9,26 +9,7 @@ import {
 	Table,
 	Form,
 } from "react-bootstrap";
-import { SingleCryptoInfo } from "../interfaces";
-import { fetchData } from "../api";
-
-const useDataFetcher = (symbol: string, minutes: number) => {
-	const [data, setData] = useState<SingleCryptoInfo | null>(null);
-
-	useEffect(() => {
-		const fetchDataAndSetData = async () => {
-			const newData = await fetchData(symbol, minutes);
-			setData(newData);
-		};
-
-		const intervalId = setInterval(fetchDataAndSetData, 10000); // Fetch data every 60 seconds
-		fetchDataAndSetData(); // Fetch data immediately when component mounts
-
-		return () => clearInterval(intervalId);
-	}, [symbol, minutes]);
-
-	return data;
-};
+import useDataFetcher from "../customHooks";
 
 const PriceTracker = () => {
 	const [symbol, setSymbol] = useState("bitcoin");
@@ -36,33 +17,6 @@ const PriceTracker = () => {
 	const [inputMinutes, setInputMinutes] = useState("60");
 
 	const data = useDataFetcher(symbol, parseInt(minutes));
-
-	// const data = {
-	// 	symbol: "Bitcoin",
-	// 	latestPrice: "Latest Price",
-	// 	averagePrice: "average price",
-	// 	historicalValues: [
-	// 		{
-	// 			eur: 0.12223,
-	// 		},
-	// 		{
-	// 			eur: 0.121451,
-	// 		},
-	// 		{
-	// 			eur: 0.121451,
-	// 		},
-	// 		{
-	// 			eur: 0.121451,
-	// 		},
-	// 		{
-	// 			eur: 0.121451,
-	// 		},
-	// 		{
-	// 			eur: 0.121451,
-	// 		},
-	// 	],
-	// 	count: null,
-	// };
 
 	const handleSymbolChange = (newSymbol: string) => {
 		setSymbol(newSymbol);
@@ -126,8 +80,10 @@ const PriceTracker = () => {
 						<h2>{data.symbol}</h2>
 						<p>Latest Price: {data.latestPrice}</p>
 						<p>Average Price: {data.average}</p>
+						{data.count && (
+							<p>count (less available data than requested): {data.count} </p>
+						)}
 						<h3>Historical Data</h3>
-						{data.count && <h3>count</h3>}
 						<Table striped bordered hover>
 							<thead>
 								<tr>
