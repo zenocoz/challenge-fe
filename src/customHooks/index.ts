@@ -11,7 +11,7 @@ const useDataFetcher = (symbol: string, minutes: number) => {
 			setData(newData);
 		};
 
-		const intervalId = setInterval(fetchDataAndSetData, 10000); // Fetch data every 60 seconds
+		const intervalId = setInterval(fetchDataAndSetData, 60000); // Fetch data every 60 seconds
 		fetchDataAndSetData(); // Fetch data immediately when component mounts
 
 		return () => clearInterval(intervalId);
